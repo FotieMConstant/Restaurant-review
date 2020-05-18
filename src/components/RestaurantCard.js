@@ -22,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline',
   },
   large: {
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+    width: theme.spacing(12),
+    height: theme.spacing(12),
+    'margin-top': '5px'
   },
 }));
 
@@ -33,8 +34,8 @@ export default function RestaurantCard() {
   return (
     <List className={classes.root}>
       <ListItem alignItems="flex-start">
+   
         <ListItemText
-          primary="Restaurant 1"
           secondary={
             <React.Fragment>
               <Typography
@@ -43,7 +44,8 @@ export default function RestaurantCard() {
                 className={classes.inline}
                 color="textPrimary"
               >
-                Yaounde, Cameroon
+                 <h2>Restaurant 1</h2>
+                Yaounde, Cameroon<br/>
               </Typography>
              <HoverRating/>
             </React.Fragment>
@@ -58,7 +60,6 @@ export default function RestaurantCard() {
 
       <ListItem alignItems="flex-start">
         <ListItemText
-          primary="Restaurant 2"
           secondary={
             <React.Fragment>
               <Typography
@@ -67,7 +68,8 @@ export default function RestaurantCard() {
                 className={classes.inline}
                 color="textPrimary"
               >
-                Douala, Cameroon
+               <h2>Restaurant 2</h2>
+                Douala, Cameroon<br/>
               </Typography>
               <HoverRating/>
             </React.Fragment>
@@ -83,7 +85,6 @@ export default function RestaurantCard() {
       <ListItem alignItems="flex-start">
         
         <ListItemText
-          primary="Restaurant 3"
           secondary={
             <React.Fragment>
               <Typography
@@ -92,7 +93,8 @@ export default function RestaurantCard() {
                 className={classes.inline}
                 color="textPrimary"
               >
-                Bafoussam, Cameroon
+               <h2>Restaurant 3</h2>
+                Bafoussam, Cameroon<br/>
               </Typography>
               <HoverRating/>
             </React.Fragment>
