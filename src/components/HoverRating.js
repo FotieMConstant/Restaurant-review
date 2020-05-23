@@ -17,11 +17,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function HoverRating() {
+export default function HoverRating(rating) {
   const classes = useStyles();
-
+  
   return (
     <div className="wrapper">
+       {console.log(rating)}
       <span>2.0</span>
         <div className={classes.root}>
         <Rating name="size-medium" defaultValue={2} />

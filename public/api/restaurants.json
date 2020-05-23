@@ -1,0 +1,50 @@
+[
+    {
+       "restaurantName":"Afriland First Bank POS - Katio’s Vip",
+       "address":"Face mercure Hôtel Rue Frederic Foe, Yaounde, Cameroon",
+       "lat":48.8737815,
+       "long":2.3501649,
+       "ratings":[
+          {
+             "stars":4,
+             "comment":"Great! But not many veggie options."
+          },
+          {
+             "stars":5,
+             "comment":"My favorite restaurant!"
+          }
+       ]
+    },
+    {
+       "restaurantName":"La Table de Francois",
+       "address":"Yaounde, Cameroon",
+       "lat":48.8865035,
+       "long":2.3442197,
+       "ratings":[
+          {
+             "stars":5,
+             "comment":"Tiny pizzeria next to Sacre Coeur!"
+          },
+          {
+             "stars":3,
+             "comment":"Meh, it was fine."
+          }
+       ]
+    },
+    {
+        "restaurantName":"La Marmite Du Boulevard, Yaoundé",
+        "address":"Centre Commercial Hilton Hôtel, Boulevard du 20 mai, Yaoundé, Cameroon",
+        "lat":48.8865035,
+        "long":2.3442197,
+        "ratings":[
+           {
+              "stars":5,
+              "comment":"Tiny pizzeria next to Sacre Coeur!"
+           },
+           {
+              "stars":3,
+              "comment":"Meh, it was fine."
+           }
+        ]
+     }
+ ]

@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import RestaurantCard from './RestaurantCard';
+import Rating from '@material-ui/lab/Rating';
+import ContentFeed from './DataHandle';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,12 +33,14 @@ export default function Main() {
       <Typography variant="subtitle1" gutterBottom>
       </Typography>
       <Grid container spacing={0}>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <Paper className={classes.paper}>Google Map will be loaded here</Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <Paper className={classes.paper}>
-            <RestaurantCard/>
+            <h3>Nearby Places</h3>
+            <Rating name="size-medium" defaultValue={1} />
+            <ContentFeed/>
           </Paper>
         </Grid>
       </Grid>
