@@ -6,11 +6,11 @@
        "long":2.3501649,
        "ratings":[
           {
-             "stars":4,
+             "stars":2,
              "comment":"Great! But not many veggie options."
           },
           {
-             "stars":5,
+             "stars":1,
              "comment":"My favorite restaurant!"
           }
        ]
@@ -22,7 +22,7 @@
        "long":2.3442197,
        "ratings":[
           {
-             "stars":5,
+             "stars":4,
              "comment":"Tiny pizzeria next to Sacre Coeur!"
           },
           {
@@ -38,13 +38,29 @@
         "long":2.3442197,
         "ratings":[
            {
-              "stars":5,
+              "stars":3,
               "comment":"Tiny pizzeria next to Sacre Coeur!"
            },
            {
-              "stars":3,
+              "stars":1,
               "comment":"Meh, it was fine."
            }
         ]
-     }
+     },
+     {
+      "restaurantName":"Tchopetyamo, Yaoundé",
+      "address":"Yaounde BP 10073, Cameroon",
+      "lat":48.8865035,
+      "long":2.3442197,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":1,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   }
  ]

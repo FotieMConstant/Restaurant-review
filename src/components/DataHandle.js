@@ -8,9 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-// Improting ratings component
-import HoverRating from './HoverRating';
 import { useEffect } from 'react';
+// Improting ratings component
+import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,16 +65,21 @@ function ContentFeed() {
                     >
                        <span>
                        <h3>{Feed.restaurantName}</h3>
-                       {Feed.address.substring(0,40)}...<br/>
+                         <i>{Feed.address.substring(0,40)}...</i><br/>
                        </span>
                     </Typography>
-                   <HoverRating rating={Feed.restaurantName}/>
+                    <div className="wrapper">
+                      <div className={classes.root}>
+                      <span>{Feed.ratings[0].stars}.0</span> <Rating name="size-medium" defaultValue={Feed.ratings[0].stars} readOnly/>
+                      </div>
+                    </div>
+
                   </React.Fragment>
                 }
               />
               <div  className={classes.profile}>
               <ListItemAvatar>
-                <Avatar className={classes.large} alt="Restaurant 1" src="assets/images/avatars/img.JPG" />
+                <Avatar className={classes.large} alt={Feed.restaurantName} src="assets/images/avatars/img.JPG" />
               </ListItemAvatar>
               </div>
             </ListItem>
