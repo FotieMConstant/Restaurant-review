@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
-import ContentFeed from './DataHandle';
+import ContentFeed from './RestaurantList';
 
 
 const useStyles = makeStyles((theme) => ({

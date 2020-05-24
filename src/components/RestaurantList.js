@@ -70,7 +70,7 @@ function ContentFeed() {
                     </Typography>
                     <div className="wrapper">
                       <div className={classes.root}>
-                      <span>{Feed.ratings[0].stars}.0</span> <Rating name="size-medium" defaultValue={Feed.ratings[0].stars} readOnly/>
+                      <span>{Feed.ratings[0].stars}.0</span> <Rating name="size-small" defaultValue={Feed.ratings[0].stars} size="small" readOnly/>
                       </div>
                     </div>
 
