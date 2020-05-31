@@ -12,7 +12,11 @@
           {
              "stars":1,
              "comment":"My favorite restaurant!"
-          }
+          },
+          {
+            "stars":3,
+            "comment":"It was Amazing"
+         }
        ]
     },
     {

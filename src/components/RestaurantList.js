@@ -41,15 +41,14 @@ function ContentFeed() {
         .then(res => {
           let Feeds = res.data;
           setFeeds(Feeds);
-          console.log(res.data);
         })
     }, [])
 
         return (
           <div>
            <Divider/>
-            { Feeds.map((Feed,i) => 
-            <div key={i}>
+            { Feeds.map((Feed, index) => 
+            <div key={index}>
 
             <List className={classes.root}>
             <ListItem alignItems="flex-start">
@@ -70,7 +69,25 @@ function ContentFeed() {
                     </Typography>
                     <div className="wrapper">
                       <div className={classes.root}>
+                         {
+                          (typeof(Feed.ratings)=='object')? //Checking if it's an object
+                          <div>
+                             
+                            {
+                              // Another map function to loop through the sub array for stars
+                              Feed.ratings.map((subFeed, k)=>
+                                <div>
+                                  {/* {subFeed.stars} */}
+                                 {/* the ratings array here per restuarant */}
+                                </div>
+                              )
+                            }
+                          </div>
+                          :
+                          null//Returning null if it's not an object
+                        }
                       <span>{Feed.ratings[0].stars}.0</span> <Rating name="size-small" defaultValue={Feed.ratings[0].stars} size="small" readOnly/>
+                      <p>Form { Feed.ratings.length } ratings</p>
                       </div>
                     </div>
 

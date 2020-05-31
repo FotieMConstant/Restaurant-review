@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import ContentFeed from './RestaurantList';
+// import drawer from './drawer';
+import Map from './myMap';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +36,9 @@ export default function Main() {
       </Typography>
       <Grid container spacing={0}>
         <Grid item xs={8}>
-          <Paper className={classes.paper}>Google Map will be loaded here</Paper>
+          <Paper className={classes.paper}>
+          <Map/>
+          </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.paper}>
