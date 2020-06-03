@@ -87,7 +87,7 @@ function ContentFeed() {
                           null//Returning null if it's not an object
                         }
                       <span>{Feed.ratings[0].stars}.0</span> <Rating name="size-small" defaultValue={Feed.ratings[0].stars} size="small" readOnly/>
-                      <p>Form { Feed.ratings.length } ratings</p>
+
                       </div>
                     </div>
 
