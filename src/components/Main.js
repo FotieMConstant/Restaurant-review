@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     gridGap: theme.spacing(3),
   },
   paper: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     whiteSpace: 'nowrap',

@@ -39,6 +39,6 @@ L.marker([3.846963, 11.55072], {icon: myIcon}).addTo(this.map)
 
 
   render(){
-    return <Wrapper width ="865" height="555" id="map"/>
+    return <Wrapper width ="900" height="596" id="map"/>
   }
 }
