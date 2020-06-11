@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import AddIcon from '@material-ui/icons/Add';
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
@@ -21,7 +22,7 @@ export default function FormDialog() {
   return (
     <div>
       <Button onClick={handleClickOpen}>
-        ADD RESTAURANT
+        <AddIcon style={{fill: "white"}}/>
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add new restaurant</DialogTitle>
