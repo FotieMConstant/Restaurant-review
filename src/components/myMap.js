@@ -33,6 +33,6 @@ return (
  <div> 
    <MyMapComponent isMarkerShown />
  </div>);
-    }
+    } 
 
 export default myMap
