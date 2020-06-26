@@ -48,9 +48,9 @@ const MyMapComponent = compose(
   withScriptjs,
   withGoogleMap
 )(props => (
-  <GoogleMap defaultZoom={8} defaultCenter={{ lat: latitude, lng: longitude }}>
+  <GoogleMap defaultZoom={10} defaultCenter={{ lat: latitude, lng: longitude }}>
     {props.isMarkerShown && (
-      <Marker position={{ lat: 3.846963, lng: 11.55072 }} />
+      <Marker position={{ lat: latitude, lng: longitude }} />
     )}
   </GoogleMap>
 ));
