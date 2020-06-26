@@ -8,6 +8,32 @@ import {
 } from "react-google-maps";
 
 function myMap(){
+
+  //My global variables for long and lat
+  let longitude;
+  let latitude;
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+  
+  function success(pos) {
+    var crd = pos.coords;
+    longitude = crd.longitude;
+    latitude = crd.latitude;
+
+    console.log('Your current position is:');
+    console.log(`Latitude : ${latitude}`);
+    console.log(`Longitude: ${longitude}`);
+    console.log(`More or less ${crd.accuracy} meters.`);
+  }
+  
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+  
+  navigator.geolocation.getCurrentPosition(success, error, options);
 const MyMapComponent = compose(
   withProps({
     /**
@@ -22,7 +48,7 @@ const MyMapComponent = compose(
   withScriptjs,
   withGoogleMap
 )(props => (
-  <GoogleMap defaultZoom={8} defaultCenter={{ lat: 3.846963, lng: 11.55072 }}>
+  <GoogleMap defaultZoom={8} defaultCenter={{ lat: latitude, lng: longitude }}>
     {props.isMarkerShown && (
       <Marker position={{ lat: 3.846963, lng: 11.55072 }} />
     )}
