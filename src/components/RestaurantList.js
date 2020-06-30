@@ -37,9 +37,11 @@ function ContentFeed() {
    const [Feeds, setFeeds] = React.useState([]);
   
     useEffect(() =>{
-        axios.get(`http://localhost:3000/api/restaurants.json`)
+      // axios.get(`http://localhost:3000/api/restaurants.json`)
+        axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=4.051056,9.767869&radius=1500&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`)
         .then(res => {
-          let Feeds = res.data;
+          let Feeds = res.data.results;
+          console.log(Feeds);
           setFeeds(Feeds);
         })
     }, [])
@@ -63,30 +65,13 @@ function ContentFeed() {
                       color="textPrimary"
                     >
                        <span>
-                       <h3>{Feed.restaurantName}</h3>
-                         <i>{Feed.address.substring(0,40)}...</i><br/>
+                       <h3>{Feed.name.substring(0,35)}</h3>
+                         <i>{Feed.vicinity.substring(0,40)}...</i><br/>
                        </span>
                     </Typography>
                     <div className="wrapper">
                       <div className={classes.root}>
-                         {
-                          (typeof(Feed.ratings)=='object')? //Checking if it's an object
-                          <div>
-                             
-                            {
-                              // Another map function to loop through the sub array for stars
-                              Feed.ratings.map((subFeed, k)=>
-                                <div>
-                                  {/* {subFeed.stars} */}
-                                 {/* the ratings array here per restuarant */}
-                                </div>
-                              )
-                            }
-                          </div>
-                          :
-                          null//Returning null if it's not an object
-                        }
-                      <span>{Feed.ratings[0].stars}.0</span> <Rating name="size-small" defaultValue={Feed.ratings[0].stars} size="small" readOnly/>
+                      <span>{Feed.rating}</span> <Rating name="size-small" defaultValue={Feed.rating} size="small" readOnly/>
 
                       </div>
                     </div>
@@ -96,7 +81,7 @@ function ContentFeed() {
               />
               <div  className={classes.profile}>
               <ListItemAvatar>
-                <Avatar className={classes.large} alt={Feed.restaurantName} src="assets/images/avatars/img.JPG" />
+                <Avatar className={classes.large} alt={Feed.name} src={Feed.icon} />
               </ListItemAvatar>
               </div>
             </ListItem>
