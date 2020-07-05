@@ -21,6 +21,7 @@ export default function FormDialog() {
 
   return (
     <div>
+      {console.log("it works")}
       <Button onClick={handleClickOpen}>
         <AddIcon style={{fill: "white"}}/>
       </Button>

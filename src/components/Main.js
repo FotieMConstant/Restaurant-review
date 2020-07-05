@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import ContentFeed from './RestaurantList';
 // import drawer from './drawer';
-import Map from './myMap';
+import MyMap from './MyMap';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,9 +35,9 @@ export default function Main() {
       <Typography variant="subtitle1" gutterBottom>
       </Typography>
       <Grid container spacing={0}>
-        <Grid item xs={8}>
+        <Grid item xs={8}> 
           <Paper className={classes.paper}>
-          <Map/>
+          <MyMap/>
           </Paper>
         </Grid>
         <Grid item xs={4}>

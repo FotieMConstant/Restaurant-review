@@ -8,7 +8,7 @@ import {
 } from 'react-google-maps'
 import FormDialog from './AddRestaurant'
 
-function myMap() {
+function MyMap() {
   function handleClick(event) {
     var lat = event.latLng.lat(),
       lng = event.latLng.lng()
@@ -72,4 +72,4 @@ function myMap() {
   )
 }
 
-export default myMap
+export default MyMap
