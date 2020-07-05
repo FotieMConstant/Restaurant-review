@@ -12,12 +12,8 @@ function myMap() {
   function handleClick(event) {
     var lat = event.latLng.lat(),
       lng = event.latLng.lng()
-    console.log('You clicked on the coordinates => log: ' + lng + ' lat:' + lat)
-    return (
-      <div>
-        {<FormDialog />}
-      </div>
-    )
+    console.log('You clicked on the coordinates => lng: ' + lng + ' lat:' + lat)
+    return <div>{<FormDialog />}</div>
   }
   //My global variables for long and lat
   let longitude
