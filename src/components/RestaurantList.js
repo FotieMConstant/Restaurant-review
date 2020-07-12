@@ -43,7 +43,7 @@ function ContentFeed() {
     // axios.get(`http://localhost:3000/api/restaurants.json`)
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=4.051056,9.767869&radius=1500&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=3.848032,11.502075&radius=1500&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
       )
       .then(res => {
         let Feeds = res.data.results
