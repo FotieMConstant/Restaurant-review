@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 // Improting ratings component
 import Rating from '@material-ui/lab/Rating'
 
@@ -37,20 +37,47 @@ const useStyles = makeStyles(theme => ({
 
 function ContentFeed() {
   const classes = useStyles()
-  const [Feeds, setFeeds] = React.useState([])
+  const [Feeds, setFeeds] = useState([])
+
+   //State for the set lng and lat when getting location
+   const [longitude, setLongitude] = useState(0);
+   const [latitude, setLatitude] = useState(0);
+
+   useEffect(()=>{
+    if ("geolocation" in navigator) {
+      console.log("Available");
+      navigator.geolocation.getCurrentPosition(
+          function(position) {
+              setLongitude(position.coords.longitude);
+              setLatitude(position.coords.latitude);
+          },
+          function(error) {
+              console.error("Error Code = " + error.code + " - " + error.message);
+          }
+      )
+      navigator.geolocation.watchPosition(function(position) {
+          console.log("WatchPosition => Latitude is :", position.coords.latitude);
+          console.log("WatchPosition => Longitude is :", position.coords.longitude);
+      });
+  }else{
+      console.log("Not Available");
+  }
+},[]);
+
+
 
   useEffect(() => {
     // axios.get(`http://localhost:3000/api/restaurants.json`)
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=3.848032,11.502075&radius=1500&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
       )
       .then(res => {
         let Feeds = res.data.results
         console.log(Feeds)
         setFeeds(Feeds)
       })
-  }, [])
+  }, [latitude, longitude])
 
   return (
     <div className={classes.wrapper}>
@@ -106,4 +133,4 @@ function ContentFeed() {
   )
 }
 
-export default ContentFeed
+export default React.memo(ContentFeed)

@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import HelpIcon from '@material-ui/icons/Help';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import FormDialog from './AddRestaurant';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +38,7 @@ export default function Appbar() {
           <Typography variant="h6" className={classes.title}>
              Restaurant review
           </Typography>
-          <FormDialog/><HelpIcon/>
+         <HelpIcon/>
         </Toolbar>
       </AppBar>
     </div>
