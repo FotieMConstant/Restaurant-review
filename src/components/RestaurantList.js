@@ -41,17 +41,11 @@ const useStyles = makeStyles((theme) => ({
     "overflow-y": "scroll",
     height: "525px",
   },
-  reviews: {
-    maxWidth: "10%",
-  },
 }));
 
 function ContentFeed() {
   const classes = useStyles();
   const [Feeds, setFeeds] = useState([]);
-
-  // State for place_id
-  const [placeId, setPlaceId] = useState(null);
 
   //State for details
   const [Details, setDetail] = useState(null);
@@ -64,23 +58,21 @@ function ContentFeed() {
 
   const handleExpandClick = (place_id) => {
     setExpanded(!expanded);
-    setPlaceId(place_id);
+    getPlaceDetails(place_id);
   };
-
-  //Fetching for places details
-  useEffect(() => {
+  const getPlaceDetails = (place_id) => {
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJf4puqOrbixAReA-2Dr_AwWE&fields=name,rating,reviews,formatted_phone_number&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&fields=name,rating,reviews,formatted_phone_number&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
       )
       .then((res) => {
         let Detail = res.data.result;
         console.log(JSON.stringify(res.data.result));
         setDetail(Detail);
-        console.log("Your Resto ID is => " + placeId);
+        console.log("Your Resto ID is => " + place_id);
         console.log("HERE ARE THE DETAILS " + Detail);
       });
-  }, []);
+  };
 
   //Getting the user's position
   useEffect(() => {
@@ -120,7 +112,7 @@ function ContentFeed() {
         setFeeds(Feeds);
       });
   }, [latitude, longitude]);
-
+  console.log(classes);
   return (
     <div>
       <Card className={classes.wrapper}>
@@ -184,49 +176,45 @@ function ContentFeed() {
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                   <Grid container item xs={3} spacing={3}>
-                    {/* Displaying reviews */}
-                    <List className={classes.reviews}>
-                      {/* Start of Reviews */}
-                      {Details.reviews.map((Detail, index) => (
-                        <ListItem alignItems="flex-start">
-                          <ListItemAvatar>
-                            <Avatar
-                              alt="Remy Sharp"
-                              src={Detail.profile_photo_url}
-                            />
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={Detail.author_name}
-                            secondary={
-                              <React.Fragment>
-                                <Typography
-                                  component="span"
-                                  variant="body2"
-                                  className={classes.inline}
-                                  color="textPrimary"
-                                >
-                                  <Rating
-                                    name="half-rating"
-                                    precision={0.5}
-                                    defaultValue={Detail.rating}
-                                    size="small"
-                                    readOnly
-                                  />
-                                </Typography>
-                                <br />
-                                {Detail.text} <br />{" "}
-                                <em>{Detail.relative_time_description}</em>
-                              </React.Fragment>
-                            }
-                          />
-                        </ListItem>
-                      ))}
-
-                      {/* End of Reviews */}
-
-                      <Divider variant="inset" component="li" />
-                    </List>
-                    {/* End of review list */}
+                    {Details && Details.reviews
+                      ? Details.reviews.map((Detail, index) => (
+                          <List>
+                            <ListItem alignItems="flex-start">
+                              <ListItemAvatar>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src={Detail.profile_photo_url}
+                                />
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={Detail.author_name}
+                                secondary={
+                                  <React.Fragment>
+                                    <Typography
+                                      component="span"
+                                      variant="body2"
+                                      className={classes.inline}
+                                      color="textPrimary"
+                                    >
+                                      <Rating
+                                        name="half-rating"
+                                        precision={0.5}
+                                        defaultValue={Detail.rating}
+                                        size="small"
+                                        readOnly
+                                      />
+                                    </Typography>
+                                    <br />
+                                    {Detail.text} <br />{" "}
+                                    <em>{Detail.relative_time_description}</em>
+                                  </React.Fragment>
+                                }
+                              />
+                            </ListItem>
+                            <Divider variant="inset" component="li" />
+                          </List>
+                        ))
+                      : "No reviews here yet"}
                   </Grid>
                 </CardContent>
               </Collapse>
