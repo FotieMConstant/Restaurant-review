@@ -18,7 +18,8 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import CardActions from "@material-ui/core/CardActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +55,40 @@ function ContentFeed() {
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
 
+  // Adding new restaurant name state
+  const [newReviewName, setnewReviewName] = useState({
+    newReviewUserValue: "",
+  });
+  // Adding new restaurant Review state
+  const [newReview, setnewReview] = useState({
+    newReviewValue: "",
+  });
+
+  // My object to be pushed into the array
+  const myNewReview = {
+    author_name: newReviewName.newReviewUserValue,
+    rating: 0,
+    text: newReview.newReviewValue,
+  };
   const [expanded, setExpanded] = React.useState(false);
+
+  //Function to handle adding a new review
+  const handleNewReview = (placeID) => {
+    console.log("Adding a new review with place_id => " + placeID);
+    Details.reviews.push(myNewReview);
+  };
+  // Detecting the name input change
+  const onNewReviewNameChange = (e) => {
+    setnewReviewName({
+      newReviewUserValue: e.target.value,
+    });
+  };
+  // Detecting the review input change
+  const onNewReviewChange = (e) => {
+    setnewReview({
+      newReviewValue: e.target.value,
+    });
+  };
 
   const handleExpandClick = (place_id) => {
     setExpanded(!expanded);
@@ -112,7 +146,7 @@ function ContentFeed() {
         setFeeds(Feeds);
       });
   }, [latitude, longitude]);
-  console.log(classes);
+
   return (
     <div>
       <Card className={classes.wrapper}>
@@ -175,48 +209,84 @@ function ContentFeed() {
               </CardActions>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                  <Grid container item xs={3} spacing={3}>
-                    {Details && Details.reviews
-                      ? Details.reviews.map((Detail, index) => (
-                          <List>
-                            <ListItem alignItems="flex-start">
-                              <ListItemAvatar>
-                                <Avatar
-                                  alt="Remy Sharp"
-                                  src={Detail.profile_photo_url}
-                                />
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={Detail.author_name}
-                                secondary={
-                                  <React.Fragment>
-                                    <Typography
-                                      component="span"
-                                      variant="body2"
-                                      className={classes.inline}
-                                      color="textPrimary"
-                                    >
-                                      <Rating
-                                        name="half-rating"
-                                        precision={0.5}
-                                        defaultValue={Detail.rating}
-                                        size="small"
-                                        readOnly
-                                      />
-                                    </Typography>
-                                    <br />
-                                    {Detail.text} <br />{" "}
-                                    <em>{Detail.relative_time_description}</em>
-                                  </React.Fragment>
-                                }
+                  {Details && Details.reviews
+                    ? Details.reviews.map((Detail, index) => (
+                        <List>
+                          <ListItem alignItems="flex-start">
+                            <ListItemAvatar>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src={Detail.profile_photo_url}
                               />
-                            </ListItem>
-                            <Divider variant="inset" component="li" />
-                          </List>
-                        ))
-                      : "No reviews here yet"}
-                  </Grid>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={Detail.author_name}
+                              secondary={
+                                <React.Fragment>
+                                  <Typography
+                                    component="span"
+                                    variant="body2"
+                                    className={classes.inline}
+                                    color="textPrimary"
+                                  >
+                                    <Rating
+                                      name="half-rating"
+                                      precision={0.5}
+                                      defaultValue={Detail.rating}
+                                      size="small"
+                                      readOnly
+                                    />
+                                  </Typography>
+                                  <br />
+                                  {Detail.text} <br />{" "}
+                                  <em>{Detail.relative_time_description}</em>
+                                </React.Fragment>
+                              }
+                            />
+                          </ListItem>
+                          <Divider variant="inset" component="li" />
+                        </List>
+                      ))
+                    : "No reviews here yet"}
                 </CardContent>
+                <form className={classes.root} noValidate autoComplete="off">
+                  <CardContent>
+                    <div>
+                      <TextField
+                        label="Username"
+                        id="standard-size-small"
+                        placeholder="Enter your name"
+                        size="small"
+                        value={newReviewName.newReviewUserValue}
+                        onChange={onNewReviewNameChange}
+                      />
+                    </div>
+                    <br />
+                    <div>
+                      <Rating name="rating" defaultValue={0} size="small" />
+                    </div>
+                    <div>
+                      <TextField
+                        label="Review"
+                        id="filled-size-small"
+                        placeholder="Enter your review"
+                        multiline
+                        rows={4}
+                        size="small"
+                        value={newReview.newReviewValue}
+                        onChange={onNewReviewChange}
+                      />
+                    </div>
+                    <br />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleNewReview(Feed.place_id)}
+                    >
+                      Add review
+                    </Button>
+                  </CardContent>
+                </form>
               </Collapse>
               <br />
               <Divider />

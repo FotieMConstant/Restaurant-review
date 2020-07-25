@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 import TextField from "@material-ui/core/TextField";
-
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import axios from "axios";
 
 //Styling for the map container
 const containerStyle = {
@@ -16,10 +16,13 @@ const containerStyle = {
   height: "620px",
 };
 
-function MyComponent() {
+function MyMap() {
   //State for the set lng and lat when getting location
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
+
+  // Getting the restaurants to display on map
+  const [Feeds, setFeeds] = useState([]);
 
   //Adding new Resto state
   const [newRestaurant, setnewRestaurant] = useState([]);
@@ -32,6 +35,12 @@ function MyComponent() {
   };
 
   const handleClose = () => {
+    setOpen(false);
+    setnewRestaurant([]); //Set the Previously clicked coordinates to null
+  };
+
+  // Adding a restaurant event handler
+  const handleAddResto = () => {
     setOpen(false);
   };
 
@@ -77,6 +86,20 @@ function MyComponent() {
     }
   }, []);
 
+  //Fetching NearbyPlaces to display marker on the user's location
+  useEffect(() => {
+    // axios.get(`http://localhost:3000/api/restaurants.json`)
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+      )
+      .then((res) => {
+        let Feeds = res.data.results;
+        console.log(Feeds);
+        setFeeds(Feeds);
+      });
+  }, [latitude, longitude]);
+
   const center = {
     lat: latitude,
     lng: longitude,
@@ -94,6 +117,7 @@ function MyComponent() {
         onClick={(e) => mapClick(e)}
       >
         {/* Child components, such as markers, info windows, etc. */}
+
         <Dialog
           open={open}
           onClose={handleClose}
@@ -125,7 +149,7 @@ function MyComponent() {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleAddResto} color="primary">
               ADD
             </Button>
           </DialogActions>
@@ -139,7 +163,7 @@ function MyComponent() {
               icon={{
                 path:
                   "M7 0c-3.314 0-6 3.134-6 7 0 3.31 1.969 6.083 4.616 6.812l-0.993 16.191c-0.067 1.098 0.778 1.996 1.878 1.996h1c1.1 0 1.945-0.898 1.878-1.996l-0.993-16.191c2.646-0.729 4.616-3.502 4.616-6.812 0-3.866-2.686-7-6-7zM27.167 0l-1.667 10h-1.25l-0.833-10h-0.833l-0.833 10h-1.25l-1.667-10h-0.833v13c0 0.552 0.448 1 1 1h2.604l-0.982 16.004c-0.067 1.098 0.778 1.996 1.878 1.996h1c1.1 0 1.945-0.898 1.878-1.996l-0.982-16.004h2.604c0.552 0 1-0.448 1-1v-13h-0.833z",
-                fillColor: "#375fc4",
+                fillColor: "#eb3734",
                 fillOpacity: 1.0,
                 strokeWeight: 0,
                 scale: 1,
@@ -153,9 +177,26 @@ function MyComponent() {
           position={userCurrentPosition}
           icon={"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
         />
+        {/* Mapping to display the available restaurants around the user's location */}
+        {Feeds.map((Feed, index) => (
+          <Marker
+            position={{
+              lat: Feed.geometry.location.lat,
+              lng: Feed.geometry.location.lng,
+            }}
+            icon={{
+              path:
+                "M7 0c-3.314 0-6 3.134-6 7 0 3.31 1.969 6.083 4.616 6.812l-0.993 16.191c-0.067 1.098 0.778 1.996 1.878 1.996h1c1.1 0 1.945-0.898 1.878-1.996l-0.993-16.191c2.646-0.729 4.616-3.502 4.616-6.812 0-3.866-2.686-7-6-7zM27.167 0l-1.667 10h-1.25l-0.833-10h-0.833l-0.833 10h-1.25l-1.667-10h-0.833v13c0 0.552 0.448 1 1 1h2.604l-0.982 16.004c-0.067 1.098 0.778 1.996 1.878 1.996h1c1.1 0 1.945-0.898 1.878-1.996l-0.982-16.004h2.604c0.552 0 1-0.448 1-1v-13h-0.833z",
+              fillColor: "#375fc4",
+              fillOpacity: 1.0,
+              strokeWeight: 0,
+              scale: 1,
+            }}
+          />
+        ))}
       </GoogleMap>
     </LoadScript>
   );
 }
 
-export default React.memo(MyComponent);
+export default React.memo(MyMap);
