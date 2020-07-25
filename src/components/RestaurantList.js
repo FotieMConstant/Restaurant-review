@@ -63,11 +63,15 @@ function ContentFeed() {
   const [newReview, setnewReview] = useState({
     newReviewValue: "",
   });
+  // Adding new restaurant Review rating state
+  const [newReviewRating, setnewReviewRating] = useState({
+    newReviewRatingValue: "",
+  });
 
   // My object to be pushed into the array
   const myNewReview = {
     author_name: newReviewName.newReviewUserValue,
-    rating: 0,
+    rating: newReviewRating.newReviewRatingValue,
     text: newReview.newReviewValue,
   };
   const [expanded, setExpanded] = React.useState(false);
@@ -75,7 +79,9 @@ function ContentFeed() {
   //Function to handle adding a new review
   const handleNewReview = (placeID) => {
     console.log("Adding a new review with place_id => " + placeID);
-    Details.reviews.push(myNewReview);
+    let cloneDetails = JSON.parse(JSON.stringify(Details));
+    cloneDetails.reviews.push(myNewReview);
+    setDetail(cloneDetails);
   };
   // Detecting the name input change
   const onNewReviewNameChange = (e) => {
@@ -89,7 +95,13 @@ function ContentFeed() {
       newReviewValue: e.target.value,
     });
   };
-
+  // Detecting the new rating input change
+  // Detecting the name input change
+  const onNewReviewRatingChange = (e) => {
+    setnewReviewRating({
+      newReviewRatingValue: e.target.value,
+    });
+  };
   const handleExpandClick = (place_id) => {
     setExpanded(!expanded);
     getPlaceDetails(place_id);
@@ -259,11 +271,18 @@ function ContentFeed() {
                         size="small"
                         value={newReviewName.newReviewUserValue}
                         onChange={onNewReviewNameChange}
+                        name="userName"
                       />
                     </div>
                     <br />
                     <div>
-                      <Rating name="rating" defaultValue={0} size="small" />
+                      <Rating
+                        name="rating"
+                        defaultValue={0}
+                        value={newReviewRating.newReviewRatingValue}
+                        size="small"
+                        onChange={onNewReviewRatingChange}
+                      />
                     </div>
                     <div>
                       <TextField
