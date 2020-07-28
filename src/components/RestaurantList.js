@@ -20,6 +20,7 @@ import CardActions from "@material-ui/core/CardActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import StreetViewPhoto from "./StreetViewPhoto";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -176,18 +177,19 @@ function ContentFeed() {
                         color="textPrimary"
                       >
                         <span>
-                          <h3>{Feed.name.substring(0, 35)}</h3>
-                          <i>{Feed.vicinity.substring(0, 40)}...</i>
+                          <h3 key={index}>{Feed.name.substring(0, 35)}</h3>
+                          <i key={index}>{Feed.vicinity.substring(0, 40)}...</i>
                           <br />
                         </span>
                       </Typography>
                       <div className="wrapper">
                         <div className={classes.root}>
-                          <span>{Feed.rating}</span>
+                          <span key={index}>{Feed.rating}</span>
                           <Rating
                             name="half-rating"
                             precision={0.5}
                             defaultValue={Feed.rating}
+                            key={index}
                             size="small"
                             readOnly
                           />
@@ -202,6 +204,7 @@ function ContentFeed() {
                       className={classes.large}
                       alt={Feed.name}
                       src={Feed.icon}
+                      key={index}
                     />
                   </ListItemAvatar>
                 </div>
@@ -215,6 +218,7 @@ function ContentFeed() {
                   onClick={() => handleExpandClick(Feed.place_id)}
                   aria-expanded={expanded}
                   aria-label="show more"
+                  key={index}
                 >
                   <ExpandMoreIcon size="small" className={classes.dropper} />
                 </IconButton>
@@ -301,9 +305,17 @@ function ContentFeed() {
                       variant="contained"
                       color="primary"
                       onClick={() => handleNewReview(Feed.place_id)}
+                      key={index}
                     >
                       Add review
                     </Button>
+                    <br />
+                    <StreetViewPhoto
+                      key={index}
+                      restoName={Feed.name}
+                      latitude={Feed.geometry.location.lat}
+                      longitude={Feed.geometry.location.lng}
+                    />
                   </CardContent>
                 </form>
               </Collapse>
