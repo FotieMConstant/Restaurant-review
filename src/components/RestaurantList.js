@@ -21,6 +21,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import StreetViewPhoto from "./StreetViewPhoto";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     "overflow-y": "scroll",
     height: "525px",
+  },
+  waiting: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 
@@ -224,47 +231,55 @@ function ContentFeed() {
                 </IconButton>
               </CardActions>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  {Details && Details.reviews
-                    ? Details.reviews.map((Detail, index) => (
-                        <List>
-                          <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                              <Avatar
-                                alt="Remy Sharp"
-                                src={Detail.profile_photo_url}
-                              />
-                            </ListItemAvatar>
-                            <ListItemText
-                              primary={Detail.author_name}
-                              secondary={
-                                <React.Fragment>
-                                  <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className={classes.inline}
-                                    color="textPrimary"
-                                  >
-                                    <Rating
-                                      name="half-rating"
-                                      precision={0.5}
-                                      defaultValue={Detail.rating}
-                                      size="small"
-                                      readOnly
-                                    />
-                                  </Typography>
-                                  <br />
-                                  {Detail.text} <br />{" "}
-                                  <em>{Detail.relative_time_description}</em>
-                                </React.Fragment>
-                              }
-                            />
-                          </ListItem>
-                          <Divider variant="inset" component="li" />
-                        </List>
-                      ))
-                    : "No reviews here yet"}
-                </CardContent>
+                {Details && Details.reviews ? (
+                  Details.reviews.map((Detail, index) => (
+                    <List>
+                      <ListItem alignItems="flex-start">
+                        <ListItemAvatar>
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={Detail.profile_photo_url}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          style={{
+                            backgroundColor: "#cfe8fc",
+                            width: "60px",
+                            "word-wrap": "anywhere",
+                          }}
+                          primary={Detail.author_name}
+                          secondary={
+                            <React.Fragment>
+                              <Typography
+                                component="span"
+                                variant="body2"
+                                className={classes.inline}
+                                color="textPrimary"
+                              >
+                                <Rating
+                                  name="half-rating"
+                                  precision={0.5}
+                                  defaultValue={Detail.rating}
+                                  size="small"
+                                  readOnly
+                                />
+                              </Typography>
+                              <br />
+                              {Detail.text}
+                              <br />
+                              <em>{Detail.relative_time_description}</em>
+                            </React.Fragment>
+                          }
+                        />
+                      </ListItem>
+                      <Divider variant="inset" component="li" />
+                    </List>
+                  ))
+                ) : (
+                  <div className={classes.waiting}>
+                    <LinearProgress />
+                  </div>
+                )}
                 <form className={classes.root} noValidate autoComplete="off">
                   <CardContent>
                     <div>
