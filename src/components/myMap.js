@@ -16,11 +16,7 @@ const containerStyle = {
   height: "620px",
 };
 
-function MyMap() {
-  //State for the set lng and lat when getting location
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-
+function MyMap(props) {
   // Getting the restaurants to display on map
   const [Feeds, setFeeds] = useState([]);
 
@@ -62,51 +58,27 @@ function MyMap() {
     );
   };
 
-  //Getting the user's coordinates // Lng and Lat
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      console.log("Available");
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          console.log("Latitude is :", position.coords.latitude);
-          console.log("Longitude is :", position.coords.longitude);
-          setLongitude(position.coords.longitude);
-          setLatitude(position.coords.latitude);
-        },
-        function (error) {
-          console.error("Error Code = " + error.code + " - " + error.message);
-        }
-      );
-      navigator.geolocation.watchPosition(function (position) {
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-      });
-    } else {
-      console.log("Not Available");
-    }
-  }, []);
-
   //Fetching NearbyPlaces to display marker on the user's location
   useEffect(() => {
     // axios.get(`http://localhost:3000/api/restaurants.json`)
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${props.latitude},${props.longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
       )
       .then((res) => {
         let Feeds = res.data.results;
         console.log(Feeds);
         setFeeds(Feeds);
       });
-  }, [latitude, longitude]);
+  }, [props.latitude, props.longitude]);
 
   const center = {
-    lat: latitude,
-    lng: longitude,
+    lat: props.latitude,
+    lng: props.longitude,
   };
   const userCurrentPosition = {
-    lat: latitude,
-    lng: longitude,
+    lat: props.latitude,
+    lng: props.longitude,
   };
   return (
     <LoadScript googleMapsApiKey="AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU">

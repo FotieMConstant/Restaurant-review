@@ -52,16 +52,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ContentFeed() {
+function ContentFeed(props) {
   const classes = useStyles();
   const [Feeds, setFeeds] = useState([]);
 
   //State for details
   const [Details, setDetail] = useState(null);
-
-  //State for the set lng and lat when getting location
-  const [longitude, setLongitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
 
   // Adding new restaurant name state
   const [newReviewName, setnewReviewName] = useState({
@@ -82,12 +78,15 @@ function ContentFeed() {
     rating: newReviewRating.newReviewRatingValue,
     text: newReview.newReviewValue,
   };
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState({});
 
   //Function to handle adding a new review
   const handleNewReview = (placeID) => {
     console.log("Adding a new review with place_id => " + placeID);
     let cloneDetails = JSON.parse(JSON.stringify(Details));
+    if (!cloneDetails.reviews) {
+      cloneDetails.reviews = [];
+    }
     cloneDetails.reviews.push(myNewReview);
     setDetail(cloneDetails);
   };
@@ -111,7 +110,8 @@ function ContentFeed() {
     });
   };
   const handleExpandClick = (place_id) => {
-    setExpanded(!expanded);
+    expanded[place_id] = !expanded[place_id];
+    setExpanded(expanded);
     getPlaceDetails(place_id);
   };
   const getPlaceDetails = (place_id) => {
@@ -128,44 +128,19 @@ function ContentFeed() {
       });
   };
 
-  //Getting the user's position
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      console.log("Available");
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          setLongitude(position.coords.longitude);
-          setLatitude(position.coords.latitude);
-        },
-        function (error) {
-          console.error("Error Code = " + error.code + " - " + error.message);
-        }
-      );
-      navigator.geolocation.watchPosition(function (position) {
-        console.log("WatchPosition => Latitude is :", position.coords.latitude);
-        console.log(
-          "WatchPosition => Longitude is :",
-          position.coords.longitude
-        );
-      });
-    } else {
-      console.log("Not Available");
-    }
-  }, []);
-
   //Fetching NearbyPlaces
   useEffect(() => {
     // axios.get(`http://localhost:3000/api/restaurants.json`)
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${props.latitude},${props.longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
       )
       .then((res) => {
         let Feeds = res.data.results;
         console.log(Feeds);
         setFeeds(Feeds);
       });
-  }, [latitude, longitude]);
+  }, [props.latitude, props.longitude]);
 
   return (
     <div>
@@ -219,18 +194,21 @@ function ContentFeed() {
               <CardActions disableSpacing>
                 <IconButton
                   className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded,
-                    index,
+                    [classes.expandOpen]: expanded[Feed.place_id],
                   })}
                   onClick={() => handleExpandClick(Feed.place_id)}
-                  aria-expanded={expanded}
+                  aria-expanded={expanded[Feed.place_id]}
                   aria-label="show more"
                   key={index}
                 >
                   <ExpandMoreIcon size="small" className={classes.dropper} />
                 </IconButton>
               </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <Collapse
+                in={expanded[Feed.place_id]}
+                timeout="auto"
+                unmountOnExit
+              >
                 {Details && Details.reviews ? (
                   Details.reviews.map((Detail, index) => (
                     <List>
@@ -243,7 +221,6 @@ function ContentFeed() {
                         </ListItemAvatar>
                         <ListItemText
                           style={{
-                            backgroundColor: "#cfe8fc",
                             width: "60px",
                             "word-wrap": "anywhere",
                           }}
