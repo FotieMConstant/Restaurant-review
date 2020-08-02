@@ -30,6 +30,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Main() {
   const classes = useStyles();
 
+  // Filtering restaurants with rating state
+  const [filterRating, setfilterRating] = useState({
+    filterRatingValue: "5",
+  });
+
+  // Detecting the rating input change
+  const onFilterRatingChange = (e) => {
+    setfilterRating({
+      filterRatingValue: e.target.value,
+    });
+  };
+
   //State for the set lng and lat when getting location
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
@@ -57,7 +69,6 @@ export default function Main() {
       console.log("Not Available");
     }
   }, []);
-  
 
   return (
     <div>
@@ -65,14 +76,33 @@ export default function Main() {
       <Grid container spacing={0}>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
-            <MyMap latitude={latitude} longitude={longitude} />
+            <MyMap
+              latitude={latitude}
+              longitude={longitude}
+              filterRating={filterRating.filterRatingValue}
+            />
           </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.paper}>
-            <h3>Nearby Places</h3>
-            <Rating name="size-medium" defaultValue={1} />
-            <ContentFeed latitude={latitude} longitude={longitude} />
+            <h3>
+              Nearby Places <br />{" "}
+              <h6>
+                Filter Restaurants with ratings less than{" "}
+                {filterRating.filterRatingValue}
+              </h6>
+            </h3>
+            <Rating
+              name="half-rating"
+              precision={0.5}
+              value={filterRating.filterRatingValue}
+              onChange={onFilterRatingChange}
+            />
+            <ContentFeed
+              latitude={latitude}
+              longitude={longitude}
+              filterRating={filterRating.filterRatingValue}
+            />
           </Paper>
         </Grid>
       </Grid>

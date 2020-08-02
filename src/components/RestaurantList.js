@@ -84,8 +84,9 @@ function ContentFeed(props) {
   const handleNewReview = (placeID) => {
     console.log("Adding a new review with place_id => " + placeID);
     let cloneDetails = JSON.parse(JSON.stringify(Details));
+    // In case the restaurant has no review
     if (!cloneDetails.reviews) {
-      cloneDetails.reviews = [];
+      cloneDetails.reviews = []; //I make it an array so i can push to it
     }
     cloneDetails.reviews.push(myNewReview);
     setDetail(cloneDetails);
@@ -103,7 +104,6 @@ function ContentFeed(props) {
     });
   };
   // Detecting the new rating input change
-  // Detecting the name input change
   const onNewReviewRatingChange = (e) => {
     setnewReviewRating({
       newReviewRatingValue: e.target.value,
@@ -145,177 +145,183 @@ function ContentFeed(props) {
   return (
     <div>
       <Card className={classes.wrapper}>
-        {Feeds.map((Feed, index) => (
-          <div key={index}>
-            <List className={classes.root}>
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.inline}
-                        color="textPrimary"
-                      >
-                        <span>
-                          <h3 key={index}>{Feed.name.substring(0, 35)}</h3>
-                          <i key={index}>{Feed.vicinity.substring(0, 40)}...</i>
-                          <br />
-                        </span>
-                      </Typography>
-                      <div className="wrapper">
-                        <div className={classes.root}>
-                          <span key={index}>{Feed.rating}</span>
-                          <Rating
-                            name="half-rating"
-                            precision={0.5}
-                            defaultValue={Feed.rating}
-                            key={index}
-                            size="small"
-                            readOnly
-                          />
+        {Feeds.map((Feed, index) =>
+          Feed.rating <= props.filterRating ? (
+            <div key={index}>
+              <List className={classes.root}>
+                <ListItem alignItems="flex-start">
+                  <ListItemText
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          <span>
+                            <h3 key={index}>{Feed.name.substring(0, 35)}</h3>
+                            <i key={index}>
+                              {Feed.vicinity.substring(0, 40)}...
+                            </i>
+                            <br />
+                          </span>
+                        </Typography>
+                        <div className="wrapper">
+                          <div className={classes.root}>
+                            <span key={index}>{Feed.rating}</span>
+                            <Rating
+                              name="half-rating"
+                              precision={0.5}
+                              defaultValue={Feed.rating}
+                              key={index}
+                              size="small"
+                              readOnly
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-                <div className={classes.profile}>
-                  <ListItemAvatar>
-                    <Avatar
-                      className={classes.large}
-                      alt={Feed.name}
-                      src={Feed.icon}
-                      key={index}
-                    />
-                  </ListItemAvatar>
-                </div>
-              </ListItem>
-              <CardActions disableSpacing>
-                <IconButton
-                  className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded[Feed.place_id],
-                  })}
-                  onClick={() => handleExpandClick(Feed.place_id)}
-                  aria-expanded={expanded[Feed.place_id]}
-                  aria-label="show more"
-                  key={index}
-                >
-                  <ExpandMoreIcon size="small" className={classes.dropper} />
-                </IconButton>
-              </CardActions>
-              <Collapse
-                in={expanded[Feed.place_id]}
-                timeout="auto"
-                unmountOnExit
-              >
-                {Details && Details.reviews ? (
-                  Details.reviews.map((Detail, index) => (
-                    <List>
-                      <ListItem alignItems="flex-start">
-                        <ListItemAvatar>
-                          <Avatar
-                            alt="Remy Sharp"
-                            src={Detail.profile_photo_url}
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          style={{
-                            width: "60px",
-                            "word-wrap": "anywhere",
-                          }}
-                          primary={Detail.author_name}
-                          secondary={
-                            <React.Fragment>
-                              <Typography
-                                component="span"
-                                variant="body2"
-                                className={classes.inline}
-                                color="textPrimary"
-                              >
-                                <Rating
-                                  name="half-rating"
-                                  precision={0.5}
-                                  defaultValue={Detail.rating}
-                                  size="small"
-                                  readOnly
-                                />
-                              </Typography>
-                              <br />
-                              {Detail.text}
-                              <br />
-                              <em>{Detail.relative_time_description}</em>
-                            </React.Fragment>
-                          }
-                        />
-                      </ListItem>
-                      <Divider variant="inset" component="li" />
-                    </List>
-                  ))
-                ) : (
-                  <div className={classes.waiting}>
-                    <LinearProgress />
+                      </React.Fragment>
+                    }
+                  />
+                  <div className={classes.profile}>
+                    <ListItemAvatar>
+                      <Avatar
+                        className={classes.large}
+                        alt={Feed.name}
+                        src={Feed.icon}
+                        key={index}
+                      />
+                    </ListItemAvatar>
                   </div>
-                )}
-                <form className={classes.root} noValidate autoComplete="off">
-                  <CardContent>
-                    <div>
-                      <TextField
-                        label="Username"
-                        id="standard-size-small"
-                        placeholder="Enter your name"
-                        size="small"
-                        value={newReviewName.newReviewUserValue}
-                        onChange={onNewReviewNameChange}
-                        name="userName"
-                      />
+                </ListItem>
+                <CardActions disableSpacing>
+                  <IconButton
+                    className={clsx(classes.expand, {
+                      [classes.expandOpen]: expanded[Feed.place_id],
+                    })}
+                    onClick={() => handleExpandClick(Feed.place_id)}
+                    aria-expanded={expanded[Feed.place_id]}
+                    aria-label="show more"
+                    key={index}
+                  >
+                    <ExpandMoreIcon size="small" className={classes.dropper} />
+                  </IconButton>
+                </CardActions>
+                <Collapse
+                  in={expanded[Feed.place_id]}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  {Details && Details.reviews ? (
+                    Details.reviews.map((Detail, index) => (
+                      <List>
+                        <ListItem alignItems="flex-start">
+                          <ListItemAvatar>
+                            <Avatar
+                              alt="Remy Sharp"
+                              src={Detail.profile_photo_url}
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            style={{
+                              width: "60px",
+                              "word-wrap": "anywhere",
+                            }}
+                            primary={Detail.author_name}
+                            secondary={
+                              <React.Fragment>
+                                <Typography
+                                  component="span"
+                                  variant="body2"
+                                  className={classes.inline}
+                                  color="textPrimary"
+                                >
+                                  <Rating
+                                    name="half-rating"
+                                    precision={0.5}
+                                    defaultValue={Detail.rating}
+                                    size="small"
+                                    readOnly
+                                  />
+                                </Typography>
+                                <br />
+                                {Detail.text}
+                                <br />
+                                <em>{Detail.relative_time_description}</em>
+                              </React.Fragment>
+                            }
+                          />
+                        </ListItem>
+                        <Divider variant="inset" component="li" />
+                      </List>
+                    ))
+                  ) : (
+                    <div className={classes.waiting}>
+                      <LinearProgress />
                     </div>
-                    <br />
-                    <div>
-                      <Rating
-                        name="rating"
-                        defaultValue={0}
-                        value={newReviewRating.newReviewRatingValue}
-                        size="small"
-                        onChange={onNewReviewRatingChange}
+                  )}
+                  <form className={classes.root} noValidate autoComplete="off">
+                    <CardContent>
+                      <div>
+                        <TextField
+                          label="Username"
+                          id="standard-size-small"
+                          placeholder="Enter your name"
+                          size="small"
+                          value={newReviewName.newReviewUserValue}
+                          onChange={onNewReviewNameChange}
+                          name="userName"
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <Rating
+                          name="rating"
+                          defaultValue={0}
+                          value={newReviewRating.newReviewRatingValue}
+                          size="small"
+                          onChange={onNewReviewRatingChange}
+                        />
+                      </div>
+                      <div>
+                        <TextField
+                          label="Review"
+                          id="filled-size-small"
+                          placeholder="Enter your review"
+                          multiline
+                          rows={4}
+                          size="small"
+                          value={newReview.newReviewValue}
+                          onChange={onNewReviewChange}
+                        />
+                      </div>
+                      <br />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleNewReview(Feed.place_id)}
+                        key={index}
+                      >
+                        Add review
+                      </Button>
+                      <br />
+                      <StreetViewPhoto
+                        key={index}
+                        restoName={Feed.name}
+                        latitude={Feed.geometry.location.lat}
+                        longitude={Feed.geometry.location.lng}
                       />
-                    </div>
-                    <div>
-                      <TextField
-                        label="Review"
-                        id="filled-size-small"
-                        placeholder="Enter your review"
-                        multiline
-                        rows={4}
-                        size="small"
-                        value={newReview.newReviewValue}
-                        onChange={onNewReviewChange}
-                      />
-                    </div>
-                    <br />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleNewReview(Feed.place_id)}
-                      key={index}
-                    >
-                      Add review
-                    </Button>
-                    <br />
-                    <StreetViewPhoto
-                      key={index}
-                      restoName={Feed.name}
-                      latitude={Feed.geometry.location.lat}
-                      longitude={Feed.geometry.location.lng}
-                    />
-                  </CardContent>
-                </form>
-              </Collapse>
-              <br />
-              <Divider />
-            </List>
-          </div>
-        ))}
+                    </CardContent>
+                  </form>
+                </Collapse>
+                <br />
+                <Divider />
+              </List>
+            </div>
+          ) : (
+            <span></span>
+          )
+        )}
       </Card>
     </div>
   );
