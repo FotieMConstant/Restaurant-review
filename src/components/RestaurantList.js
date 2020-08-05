@@ -8,7 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // Improting ratings component
 import Rating from "@material-ui/lab/Rating";
 import Card from "@material-ui/core/Card";
@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ContentFeed(props) {
   const classes = useStyles();
-  const [Feeds, setFeeds] = useState([]);
 
   //State for details
   const [Details, setDetail] = useState(null);
@@ -128,24 +127,10 @@ function ContentFeed(props) {
       });
   };
 
-  //Fetching NearbyPlaces
-  useEffect(() => {
-    // axios.get(`http://localhost:3000/api/restaurants.json`)
-    axios
-      .get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${props.latitude},${props.longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
-      )
-      .then((res) => {
-        let Feeds = res.data.results;
-        console.log(Feeds);
-        setFeeds(Feeds);
-      });
-  }, [props.latitude, props.longitude]);
-
   return (
     <div>
       <Card className={classes.wrapper}>
-        {Feeds.map((Feed, index) =>
+        {props.Feeds.map((Feed, index) =>
           Feed.rating <= props.filterRating ? (
             <div key={index}>
               <List className={classes.root}>
