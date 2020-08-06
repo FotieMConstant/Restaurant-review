@@ -158,7 +158,7 @@ export default function Main() {
   // Adding a restaurant event handler
   const handleAddResto = () => {
     setOpen(false);
-    let place_id = uuid(1);
+    let place_id = uuid();
     console.log("Restaurant gen =>" + place_id);
     setnewPlace_id(place_id); //Setting the newPlace_id of my new restaurant
     console.log("Newly added resto => " + newResto);
