@@ -273,7 +273,7 @@ export default function Main() {
                 {/* Displaying a marker on the user's location with the position props */}
                 <Marker
                   position={userCurrentPosition}
-                  icon={"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
+                  icon={"https://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
                 />
                 {/* Mapping to display the available restaurants around the user's location */}
                 {Feeds.map((Feed, index) =>
