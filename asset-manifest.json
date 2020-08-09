@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Todo-list-app/static/css/main.ee2df1e9.chunk.css",
-    "main.js": "/Todo-list-app/static/js/main.a4dbd5a9.chunk.js",
-    "main.js.map": "/Todo-list-app/static/js/main.a4dbd5a9.chunk.js.map",
-    "runtime-main.js": "/Todo-list-app/static/js/runtime-main.bb5da873.js",
-    "runtime-main.js.map": "/Todo-list-app/static/js/runtime-main.bb5da873.js.map",
-    "static/js/2.3cc8f986.chunk.js": "/Todo-list-app/static/js/2.3cc8f986.chunk.js",
-    "static/js/2.3cc8f986.chunk.js.map": "/Todo-list-app/static/js/2.3cc8f986.chunk.js.map",
-    "index.html": "/Todo-list-app/index.html",
-    "precache-manifest.b245647931a07981c08a48bf109f9ff7.js": "/Todo-list-app/precache-manifest.b245647931a07981c08a48bf109f9ff7.js",
-    "service-worker.js": "/Todo-list-app/service-worker.js",
-    "static/css/main.ee2df1e9.chunk.css.map": "/Todo-list-app/static/css/main.ee2df1e9.chunk.css.map",
-    "static/js/2.3cc8f986.chunk.js.LICENSE.txt": "/Todo-list-app/static/js/2.3cc8f986.chunk.js.LICENSE.txt"
+    "main.css": "/Restaurant-review/static/css/main.ee2df1e9.chunk.css",
+    "main.js": "/Restaurant-review/static/js/main.e29b3deb.chunk.js",
+    "main.js.map": "/Restaurant-review/static/js/main.e29b3deb.chunk.js.map",
+    "runtime-main.js": "/Restaurant-review/static/js/runtime-main.2e56e8f6.js",
+    "runtime-main.js.map": "/Restaurant-review/static/js/runtime-main.2e56e8f6.js.map",
+    "static/js/2.3cc8f986.chunk.js": "/Restaurant-review/static/js/2.3cc8f986.chunk.js",
+    "static/js/2.3cc8f986.chunk.js.map": "/Restaurant-review/static/js/2.3cc8f986.chunk.js.map",
+    "index.html": "/Restaurant-review/index.html",
+    "precache-manifest.5ad9be5066afb9bdc69220f55fe54e8e.js": "/Restaurant-review/precache-manifest.5ad9be5066afb9bdc69220f55fe54e8e.js",
+    "service-worker.js": "/Restaurant-review/service-worker.js",
+    "static/css/main.ee2df1e9.chunk.css.map": "/Restaurant-review/static/css/main.ee2df1e9.chunk.css.map",
+    "static/js/2.3cc8f986.chunk.js.LICENSE.txt": "/Restaurant-review/static/js/2.3cc8f986.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.bb5da873.js",
+    "static/js/runtime-main.2e56e8f6.js",
     "static/js/2.3cc8f986.chunk.js",
     "static/css/main.ee2df1e9.chunk.css",
-    "static/js/main.a4dbd5a9.chunk.js"
+    "static/js/main.e29b3deb.chunk.js"
   ]
 }
