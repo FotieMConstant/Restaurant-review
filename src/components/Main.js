@@ -162,9 +162,10 @@ export default function Main() {
     console.log("Restaurant gen =>" + place_id);
     setnewPlace_id(place_id); //Setting the newPlace_id of my new restaurant
     console.log("Newly added resto => " + newResto);
-    console.log(Feeds);
-    Feeds.push(newResto);
-    setFeeds(Feeds);
+    newResto.place_id = place_id;
+    let cloneFeeds = JSON.parse(JSON.stringify(Feeds));
+    cloneFeeds.push(newResto);
+    setFeeds(cloneFeeds);
   };
 
   const mapClick = (e) => {

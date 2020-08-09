@@ -56,7 +56,7 @@ function ContentFeed(props) {
   const classes = useStyles();
 
   //State for details
-  const [Details, setDetail] = useState(null);
+  const [Details, setDetail] = useState({});
 
   // Adding new restaurant name state
   const [newReviewName, setnewReviewName] = useState({
@@ -82,6 +82,13 @@ function ContentFeed(props) {
   //Function to handle adding a new review
   const handleNewReview = (placeID) => {
     console.log("Adding a new review with place_id => " + placeID);
+    // If the API returns nothing, i make sure i have a structure in my Details state
+    // So i can push to it
+    if (Details === void 0 || typeof Details === "undefined") {
+      setDetail({
+        reviews: [],
+      });
+    }
     let cloneDetails = JSON.parse(JSON.stringify(Details));
     // In case the restaurant has no review
     if (!cloneDetails.reviews) {
@@ -242,6 +249,7 @@ function ContentFeed(props) {
                     ))
                   ) : (
                     <div className={classes.waiting}>
+                      <p>No reviews here yet!</p>
                       <LinearProgress />
                     </div>
                   )}
