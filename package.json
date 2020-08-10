@@ -22,7 +22,6 @@
     "save-dev": "0.0.1-security",
     "styled-components": "^5.1.1"
   },
-  "proxy": "https://maps.google.com",
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
