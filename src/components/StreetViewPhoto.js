@@ -35,7 +35,9 @@ export default function StreetViewPhoto(props) {
     setOpen(false);
   };
 
-  console.log("Props gottten => lat => " + props.latitude + " lng => " + props.longitude);
+  console.log(
+    "Props gottten => lat => " + props.latitude + " lng => " + props.longitude
+  );
 
   return (
     <div>
@@ -64,7 +66,7 @@ export default function StreetViewPhoto(props) {
           </Toolbar>
         </AppBar>
         <img
-          src={`https://maps.googleapis.com/maps/api/streetview?size=600x625&location=${props.latitude},${props.longitude}&radius=2000&heading=151.78&pitch=-0.76&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`}
+          src={`https://maps.googleapis.com/maps/api/streetview?size=600x625&location=${props.latitude},${props.longitude}&radius=2000&heading=151.78&pitch=-0.76&key=${props.API_KEY}`}
           alt="Google Streetview"
         />
       </Dialog>

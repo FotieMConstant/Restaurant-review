@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Calling the api key in my .env file
+const API_KEY = `${process.env.REACT_APP_API_KEY}`;
+
 export default function Main() {
   const classes = useStyles();
 
@@ -188,7 +191,7 @@ export default function Main() {
     // axios.get(`http://localhost:3000/api/restaurants.json`)
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=${API_KEY}`
       )
       .then((res) => {
         let Feeds = res.data.results;
@@ -273,7 +276,9 @@ export default function Main() {
                 {/* Displaying a marker on the user's location with the position props */}
                 <Marker
                   position={userCurrentPosition}
-                  icon={"https://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
+                  icon={
+                    "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                  }
                 />
                 {/* Mapping to display the available restaurants around the user's location */}
                 {Feeds.map((Feed, index) =>

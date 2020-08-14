@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Calling the api key in my .env file
+const API_KEY = `${process.env.REACT_APP_API_KEY}`;
+
 function ContentFeed(props) {
   const classes = useStyles();
 
@@ -123,7 +126,7 @@ function ContentFeed(props) {
   const getPlaceDetails = (place_id) => {
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&fields=name,rating,reviews,formatted_phone_number&key=AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU`
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&fields=name,rating,reviews,formatted_phone_number&key=${API_KEY}`
       )
       .then((res) => {
         let Detail = res.data.result;
@@ -303,6 +306,7 @@ function ContentFeed(props) {
                         restoName={Feed.name}
                         latitude={Feed.geometry.location.lat}
                         longitude={Feed.geometry.location.lng}
+                        API_KEY={API_KEY}
                       />
                     </CardContent>
                   </form>
