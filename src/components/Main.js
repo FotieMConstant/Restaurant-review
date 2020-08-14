@@ -216,7 +216,7 @@ export default function Main() {
         <Grid item xs={8}>
           <Paper className={classes.paper}>
             {/* Map */}
-            <LoadScript googleMapsApiKey="AIzaSyD4p0gchCyP98IGwRwGes-UGx4BDEqDrjU">
+            <LoadScript googleMapsApiKey={API_KEY}>
               <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
